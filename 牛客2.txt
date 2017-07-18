@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void replaceSpace(char *str,int length) {
+        char s1[strlen(str)+1];
+            sprintf(s1,"%s",str);
+            int j=0;
+            for(int i=0;i<strlen(s1);i++)
+            {
+            if(s1[i]==' ')
+                j+=sprintf(str+j,"%s","%20");
+            else
+                j+=sprintf(str+j,"%c",s1[i]);
+              
+             }
+ 
+ 
+    }
+};

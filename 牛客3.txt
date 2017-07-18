@@ -1,0 +1,40 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+        if(pre.empty()||vin.empty())
+            return nullptr;
+         
+        TreeNode *tree=AddNode(pre[0]);
+        //分离左子树与右子树
+        auto iter=std::find(vin.begin(),vin.end(),pre[0]);
+        unsigned increment=iter-vin.begin();
+        std::vector<int> pre_left,pre_right;
+        std::vector<int> vin_left,vin_right;
+        vin_left.insert(vin_left.begin(),vin.begin(),iter);
+        vin_right.insert(vin_right.begin(),iter+1,vin.end());
+        pre_left.insert(pre_left.begin(),pre.begin()+1,pre.begin()+increment+1);
+        pre_right.insert(pre_right.begin(),pre.begin()+1+increment,pre.end());
+         
+        //递归
+        tree->left=reConstructBinaryTree(pre_left,vin_left);
+        tree->right=reConstructBinaryTree(pre_right,vin_right);
+         
+        return tree;
+    }
+     
+    //建立新的节点
+    TreeNode *AddNode(int number){
+        TreeNode *ptr=new TreeNode(number);
+        return ptr;
+    }
+ 
+};
